@@ -2,20 +2,21 @@ package org.example.banque;
 
 public class ComptePayant extends CompteBancaire {
 
-    private static final double COUT_OPERATION = 0.05;
+    private double coutOperation;
 
-    public ComptePayant(Double solde, String identifiantC, double tauxInteret) {
+    public ComptePayant(Double solde, String identifiantC, double coutOperation) {
         super(solde, identifiantC);
+        this.coutOperation = coutOperation;
     }
 
     @Override
     public void effectuerDepot(double montant) {
-        super.effectuerDepot(montant - COUT_OPERATION * montant);
+        super.effectuerDepot(montant - coutOperation * montant);
     }
 
     @Override
     public void effectuerRetrait(double montant) {
-        super.effectuerRetrait(montant + COUT_OPERATION * montant);
+        super.effectuerRetrait(montant + coutOperation * montant);
     }
 
     @Override
