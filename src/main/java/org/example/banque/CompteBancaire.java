@@ -3,13 +3,15 @@ package org.example.banque;
 public abstract class CompteBancaire {
     protected double solde;
     protected String client;
+    protected String accountId;
 
-    public abstract BanqueEnum.TypeCompte getTypeCompte();
-
-    public CompteBancaire(Double solde, String identifiantC) {
+    public CompteBancaire(Double solde, String identifiantC, String accountId) {
         this.solde = solde;
         this.client = identifiantC;
+        this.accountId = accountId;
     }
+
+    public abstract BanqueEnum.TypeCompte getTypeCompte();
 
     public Double getSolde() {
         return solde;
@@ -19,6 +21,9 @@ public abstract class CompteBancaire {
         return client;
     }
 
+    public String getAccountId() { return accountId; }
+
+
     public void effectuerRetrait(double montant) {
         this.solde -= montant;
     }
@@ -26,12 +31,5 @@ public abstract class CompteBancaire {
     public void effectuerDepot(double montant) {
         this.solde += montant;
     }
+
 }
-
-/*
-Attention, pour compte bancaire, la création devrait faire une opération de dépôt initial
-Pour aller plus loin, ce qu'on propose en général c'est que CompteEpargne ai un taux d'intérets
-et une méthode pour appliquer les intérets (nouvelle opération de dépôt)
-et que ComptePayant ai un coût d'opération qui est appliqué en temps que nouvelle opération à chaque dépôt ou retrait
-* */
-

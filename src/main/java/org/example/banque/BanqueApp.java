@@ -155,41 +155,41 @@ public class BanqueApp {
                 switch (choix) {
                     case 3:
                         System.out.println("Veuillez entrer le montant initial du compte courant: ");
-                        double amount = Integer.parseInt(scanner.nextLine());
+                        double amount = Double.parseDouble(scanner.nextLine());
                         if (amount <= 0) {
                             throw new IllegalArgumentException("Montant supérieur à 0");
                         }
                         compteCree = client.CreateAccountCourant(BanqueEnum.TypeCompte.COMPTE_COURANT, amount,
-                                     client.getIdentifiant(), amount);
+                                client.getIdentifiant(), amount, accountgenerate(client));
                         break;
                     case 2:
                         System.out.println("Veuillez entrer le montant initial du compte épargne: ");
-                        amount = Integer.parseInt(scanner.nextLine());
+                        amount = Double.parseDouble(scanner.nextLine());
                         if (amount <= 0) {
                             throw new IllegalArgumentException("Montant supérieur à 0");
                         }
 
                         System.out.println("Veuillez entrer le taux d'intérêt du compte épargne: ");
-                        double interet = Integer.parseInt(scanner.nextLine());
+                        double interet = Double.parseDouble(scanner.nextLine());
                         if (interet <= 0) {
                             throw new IllegalArgumentException("Taux d'intérêt supérieur à 0");
                         }
                         compteCree = client.CreateAccountEpargne(BanqueEnum.TypeCompte.COMPTE_EPARGNE, amount,
-                                     client.getIdentifiant(), amount, interet);
+                                client.getIdentifiant(), amount, interet, accountgenerate(client));
                         break;
                     case 1:
                         System.out.println("Veuillez entrer le montant initial du compte payant: ");
-                        amount = Integer.parseInt(scanner.nextLine());
+                        amount = Double.parseDouble(scanner.nextLine());
                         if (amount <= 0) {
                             throw new IllegalArgumentException("Montant supérieur à 0");
                         }
                         System.out.println("Veuillez entrer le cout d'opération du compte payant: ");
-                           interet = Integer.parseInt(scanner.nextLine());
+                        interet = Double.parseDouble(scanner.nextLine());
                         if (interet <= 0) {
                             throw new IllegalArgumentException("Taux d'intérêt supérieur à 0");
                         }
                         compteCree = client.CreateAccountPayant(BanqueEnum.TypeCompte.COMPTE_PAYANT, amount,
-                                     client.getIdentifiant(), amount, interet);
+                                client.getIdentifiant(), amount, interet, accountgenerate(client));
                         break;
                     case 0:
                         System.out.println("Retour au menu principal.");
@@ -213,6 +213,7 @@ public class BanqueApp {
             System.out.println(" ");
             System.out.println("Type de compte: " + compte.getTypeCompte());
             System.out.println("Solde: " + compte.getSolde());
+            System.out.println("Identifiant compte: " + compte.getAccountId());
 //          System.out.println("Identifiant client: " + compte.getClient());
         });
     }
@@ -221,4 +222,18 @@ public class BanqueApp {
         System.out.println("Liste des opérations de " + client.getNom() + " " + client.getPrenom());
         client.afficherOperationsEtSolde();
     }
+
+private String accountgenerate(Client client) {
+    String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    String accountId;
+    do {
+        StringBuilder account = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            int randomIndex = (int) (Math.random() * chars.length());
+            account.append(chars.charAt(randomIndex));
+        }
+        accountId = account.toString();
+    } while (client.checkIdExistance(accountId));
+    return accountId;
+}
 }
