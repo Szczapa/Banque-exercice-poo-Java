@@ -26,3 +26,5 @@ Permier Exercice de Poo avec système IHM dans console
 #### Todo : 
 
 - [ ]  Systeme de selection d'utilisateur avec vérification de mot de passe & d'identifiant.
+- [ ]  Ajout du compte multiple en fonction de la catégorie.
+- [ ]  Optimisation du code.
