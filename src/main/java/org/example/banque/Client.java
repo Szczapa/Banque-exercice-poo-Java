@@ -23,28 +23,40 @@ public class Client {
         this.actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_COURANT, 1300.50, DEPOT, 1300.50));
     }
 
-    public boolean CreateAccount(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde) {
+    public boolean CreateAccountCourant(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde) {
         if (checkAccount(typeCompte)) {
             System.out.println("Erreur: Ce type de compte existe déjà.");
             return false;
         }
-        switch (typeCompte) {
-            case COMPTE_COURANT:
-                comptes.add(new CompteCourant(solde, identifiantC));
-                actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_COURANT, montant, DEPOT, solde));
-                System.out.println("Compte courant créé avec succès.");
-                break;
-            case COMPTE_EPARGNE:
-                comptes.add(new CompteEpargne(solde, identifiantC));
-                actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_EPARGNE, montant, DEPOT, solde));
-                System.out.println("Compte épargne créé avec succès.");
-                break;
-            case COMPTE_PAYANT:
-                comptes.add(new ComptePayant(solde, identifiantC));
-                actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_PAYANT, montant, DEPOT, solde));
-                System.out.println("Compte payant créé avec succès.");
-                break;
+        comptes.add(new CompteCourant(solde, identifiantC));
+        actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_COURANT, montant, DEPOT, solde));
+        System.out.println("Compte courant créé avec succès.");
+        return true;
+    }
+
+    public boolean CreateAccountEpargne(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde, double tauxInteret) {
+        if (checkAccount(typeCompte)) {
+            System.out.println("Erreur: Ce type de compte existe déjà.");
+            return false;
         }
+
+        comptes.add(new CompteEpargne(solde, identifiantC, tauxInteret));
+        actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_EPARGNE, montant, DEPOT, solde));
+        System.out.println("Compte épargne créé avec succès.");
+
+        return true;
+    }
+
+    public boolean CreateAccountPayant(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde, double tauxInteret) {
+        if (checkAccount(typeCompte)) {
+            System.out.println("Erreur: Ce type de compte existe déjà.");
+            return false;
+        }
+
+        comptes.add(new ComptePayant(solde, identifiantC, tauxInteret));
+        actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_PAYANT, montant, DEPOT, solde));
+        System.out.println("Compte payant créé avec succès.");
+
         return true;
     }
 
@@ -82,18 +94,18 @@ public class Client {
         return false;
     }
 
-public void afficherOperationsEtSolde() {
-    List<BanqueAction> sortedActions = new ArrayList<>(actions);
-    sortedActions.sort(Comparator.comparing(a -> a.getTypeCompte().toString()));
+    public void afficherOperationsEtSolde() {
+        List<BanqueAction> sortedActions = new ArrayList<>(actions);
+        sortedActions.sort(Comparator.comparing(a -> a.getTypeCompte().toString()));
 
-    for (BanqueAction action : sortedActions) {
-        System.out.println(" ");
-        System.out.println("Type de compte: " + action.getTypeCompte());
-        System.out.println("Montant: " + action.getMontant());
-        System.out.println("Type d'opération: " + action.getActionType());
-        System.out.println("Solde: " + action.getSolde());
+        for (BanqueAction action : sortedActions) {
+            System.out.println(" ");
+            System.out.println("Type de compte: " + action.getTypeCompte());
+            System.out.println("Montant: " + action.getMontant());
+            System.out.println("Type d'opération: " + action.getActionType());
+            System.out.println("Solde: " + action.getSolde());
+        }
     }
-}
 
     public String getNom() {
         return nom;

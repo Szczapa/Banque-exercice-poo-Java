@@ -4,9 +4,8 @@ public class ComptePayant extends CompteBancaire {
 
     private static final double COUT_OPERATION = 0.05;
 
-    public ComptePayant(Double solde, String identifiantC) {
-        this.solde = solde;
-        this.client = identifiantC;
+    public ComptePayant(Double solde, String identifiantC, double tauxInteret) {
+        super(solde, identifiantC);
     }
 
     @Override

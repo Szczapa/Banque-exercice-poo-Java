@@ -154,13 +154,42 @@ public class BanqueApp {
                 }
                 switch (choix) {
                     case 3:
-                        compteCree = client.CreateAccount(BanqueEnum.TypeCompte.COMPTE_COURANT, 0, client.getIdentifiant(), 0);
+                        System.out.println("Veuillez entrer le montant initial du compte courant: ");
+                        double amount = Integer.parseInt(scanner.nextLine());
+                        if (amount <= 0) {
+                            throw new IllegalArgumentException("Montant supérieur à 0");
+                        }
+                        compteCree = client.CreateAccountCourant(BanqueEnum.TypeCompte.COMPTE_COURANT, amount,
+                                     client.getIdentifiant(), amount);
                         break;
                     case 2:
-                        compteCree = client.CreateAccount(BanqueEnum.TypeCompte.COMPTE_EPARGNE, 0, client.getIdentifiant(), 0);
+                        System.out.println("Veuillez entrer le montant initial du compte épargne: ");
+                        amount = Integer.parseInt(scanner.nextLine());
+                        if (amount <= 0) {
+                            throw new IllegalArgumentException("Montant supérieur à 0");
+                        }
+
+                        System.out.println("Veuillez entrer le taux d'intérêt du compte épargne: ");
+                        double interet = Integer.parseInt(scanner.nextLine());
+                        if (interet <= 0) {
+                            throw new IllegalArgumentException("Taux d'intérêt supérieur à 0");
+                        }
+                        compteCree = client.CreateAccountEpargne(BanqueEnum.TypeCompte.COMPTE_EPARGNE, amount,
+                                     client.getIdentifiant(), amount, interet);
                         break;
                     case 1:
-                        compteCree = client.CreateAccount(BanqueEnum.TypeCompte.COMPTE_PAYANT, 0, client.getIdentifiant(), 0);
+                        System.out.println("Veuillez entrer le montant initial du compte payant: ");
+                        amount = Integer.parseInt(scanner.nextLine());
+                        if (amount <= 0) {
+                            throw new IllegalArgumentException("Montant supérieur à 0");
+                        }
+                        System.out.println("Veuillez entrer le cout d'opération du compte payant: ");
+                           interet = Integer.parseInt(scanner.nextLine());
+                        if (interet <= 0) {
+                            throw new IllegalArgumentException("Taux d'intérêt supérieur à 0");
+                        }
+                        compteCree = client.CreateAccountPayant(BanqueEnum.TypeCompte.COMPTE_PAYANT, amount,
+                                     client.getIdentifiant(), amount, interet);
                         break;
                     case 0:
                         System.out.println("Retour au menu principal.");
@@ -179,12 +208,12 @@ public class BanqueApp {
 
     private void listerComptes(Client client) {
         System.out.println(" ");
-        System.out.println("Liste des comptes de " + client.getNom() + " " + client.getPrenom()+":");
+        System.out.println("Liste des comptes de " + client.getNom() + " " + client.getPrenom() + ":");
         client.getComptes().forEach(compte -> {
             System.out.println(" ");
             System.out.println("Type de compte: " + compte.getTypeCompte());
             System.out.println("Solde: " + compte.getSolde());
-//            System.out.println("Identifiant client: " + compte.getClient());
+//          System.out.println("Identifiant client: " + compte.getClient());
         });
     }
 
