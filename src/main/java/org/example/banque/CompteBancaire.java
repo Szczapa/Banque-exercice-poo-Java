@@ -6,6 +6,11 @@ public abstract class CompteBancaire {
 
     public abstract BanqueEnum.TypeCompte getTypeCompte();
 
+    public CompteBancaire(Double solde, String identifiantC) {
+        this.solde = solde;
+        this.client = identifiantC;
+    }
+
     public Double getSolde() {
         return solde;
     }

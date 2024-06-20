@@ -3,8 +3,7 @@ package org.example.banque;
 public class CompteCourant extends CompteBancaire {
 
     public CompteCourant(double solde, String identifiantC) {
-        this.solde = solde;
-        this.client = identifiantC;
+        super(solde, identifiantC);
     }
 
     @Override

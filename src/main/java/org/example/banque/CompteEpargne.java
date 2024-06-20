@@ -4,9 +4,8 @@ public class CompteEpargne extends CompteBancaire {
 
     private static final double TAUX_INTERET = 0.05;
 
-    public CompteEpargne(double solde, String identifiantC) {
-        this.solde = solde;
-        this.client = identifiantC;
+    public CompteEpargne(double solde, String identifiantC, double tauxInteret) {
+        super(solde, identifiantC);
     }
 
     @Override
