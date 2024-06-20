@@ -2,10 +2,10 @@ package org.example.banque;
 
 public class ComptePayant extends CompteBancaire {
 
-    private double coutOperation;
+    private final double coutOperation;
 
-    public ComptePayant(Double solde, String identifiantC, double coutOperation) {
-        super(solde, identifiantC);
+    public ComptePayant(Double solde, String identifiantC, double coutOperation, String accountId) {
+        super(solde, identifiantC, accountId);
         this.coutOperation = coutOperation;
     }
 

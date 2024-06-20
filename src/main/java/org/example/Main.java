@@ -1,4 +1,5 @@
 package org.example;
+
 import org.example.banque.BanqueApp;
 
 public class Main {

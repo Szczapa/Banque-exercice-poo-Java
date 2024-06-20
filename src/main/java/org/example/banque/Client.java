@@ -7,53 +7,53 @@ import java.util.List;
 public class Client {
     private static final BanqueEnum.TypeOperation DEPOT = BanqueEnum.TypeOperation.DEPOT;
     private static final BanqueEnum.TypeOperation RETRAIT = BanqueEnum.TypeOperation.RETRAIT;
+    private final List<BanqueAction> actions;
     private String nom;
     private String prenom;
     private String identifiant;
     private List<CompteBancaire> comptes;
-    private final List<BanqueAction> actions;
 
     public Client() {
         this.nom = "Dupont";
         this.prenom = "Jean";
         this.identifiant = "fnx145";
         this.comptes = new ArrayList<>();
-        this.comptes.add(new CompteCourant(1300.50, "fnx145"));
+        this.comptes.add(new CompteCourant(1300.50, "fnx145", "f1dx15z3"));
         this.actions = new ArrayList<>();
         this.actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_COURANT, 1300.50, DEPOT, 1300.50));
     }
 
-    public boolean CreateAccountCourant(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde) {
+    public boolean CreateAccountCourant(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde, String accountId) {
         if (checkAccount(typeCompte)) {
             System.out.println("Erreur: Ce type de compte existe déjà.");
             return false;
         }
-        comptes.add(new CompteCourant(solde, identifiantC));
+        comptes.add(new CompteCourant(solde, identifiantC, accountId));
         actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_COURANT, montant, DEPOT, solde));
         System.out.println("Compte courant créé avec succès.");
         return true;
     }
 
-    public boolean CreateAccountEpargne(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde, double tauxInteret) {
+    public boolean CreateAccountEpargne(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde, double tauxInteret, String accountId) {
         if (checkAccount(typeCompte)) {
             System.out.println("Erreur: Ce type de compte existe déjà.");
             return false;
         }
 
-        comptes.add(new CompteEpargne(solde, identifiantC, tauxInteret));
+        comptes.add(new CompteEpargne(solde, identifiantC, tauxInteret, accountId));
         actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_EPARGNE, montant, DEPOT, solde));
         System.out.println("Compte épargne créé avec succès.");
 
         return true;
     }
 
-    public boolean CreateAccountPayant(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde, double tauxInteret) {
+    public boolean CreateAccountPayant(BanqueEnum.TypeCompte typeCompte, double montant, String identifiantC, double solde, double tauxInteret, String accountId) {
         if (checkAccount(typeCompte)) {
             System.out.println("Erreur: Ce type de compte existe déjà.");
             return false;
         }
 
-        comptes.add(new ComptePayant(solde, identifiantC, tauxInteret));
+        comptes.add(new ComptePayant(solde, identifiantC, tauxInteret, accountId));
         actions.add(new BanqueAction(BanqueEnum.TypeCompte.COMPTE_PAYANT, montant, DEPOT, solde));
         System.out.println("Compte payant créé avec succès.");
 
@@ -106,6 +106,17 @@ public class Client {
             System.out.println("Solde: " + action.getSolde());
         }
     }
+
+    public boolean checkIdExistance(String id) {
+        for (CompteBancaire compte : comptes) {
+            if (compte.getAccountId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     public String getNom() {
         return nom;

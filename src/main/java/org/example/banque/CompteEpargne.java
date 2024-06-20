@@ -2,10 +2,11 @@ package org.example.banque;
 
 public class CompteEpargne extends CompteBancaire {
 
-    private double tauxInteret;
+    private final double tauxInteret;
 
-    public CompteEpargne(double solde, String identifiantC, double tauxInteret) {
-        super(solde, identifiantC);
+
+    public CompteEpargne(double solde, String identifiantC, double tauxInteret, String accountId){
+        super(solde, identifiantC, accountId);
         this.tauxInteret = tauxInteret;
     }
 

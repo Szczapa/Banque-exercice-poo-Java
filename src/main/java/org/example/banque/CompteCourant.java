@@ -2,8 +2,8 @@ package org.example.banque;
 
 public class CompteCourant extends CompteBancaire {
 
-    public CompteCourant(double solde, String identifiantC) {
-        super(solde, identifiantC);
+    public CompteCourant(double solde, String identifiantC, String accountId) {
+        super(solde, identifiantC, accountId);
     }
 
     @Override
